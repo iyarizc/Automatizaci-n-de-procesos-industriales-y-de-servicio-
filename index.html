@@ -173,7 +173,6 @@
     font-size:0.98rem;
   }
 
-  /* Cards en formato "vision-artificial": imagen/icono + contenido + badge de tema */
   .cards-container{
     display:grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -181,34 +180,59 @@
     margin-top:2rem;
   }
 
-  .card{
+  /* ---------- CARD ÚNICA EXPANDIBLE ---------- */
+
+  .card.primary{
+    grid-column: 1 / -1;
     background:var(--card-bg);
     border:1px solid var(--line);
     border-radius:12px;
     overflow:hidden;
     box-shadow:0 4px 6px rgba(0,0,0,0.25);
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-    cursor:default;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
   }
 
-  .card:hover{
-    transform:translateY(-8px);
-    box-shadow:0 12px 24px rgba(0,0,0,0.35);
+  .card.primary:hover{
     border-color:var(--teal);
+    box-shadow:0 12px 24px rgba(0,0,0,0.35);
+  }
+
+  .card-toggle{
+    display:flex;
+    align-items:center;
+    gap:1.4rem;
+    width:100%;
+    background:none;
+    border:none;
+    text-align:left;
+    cursor:pointer;
+    font-family:inherit;
+    color:inherit;
+    padding:0;
   }
 
   .card-image{
-    width:100%;
-    height:180px;
+    width:130px;
+    min-width:130px;
+    height:130px;
     background:linear-gradient(135deg, #0F5C5C 0%, #10A6A6 100%);
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:3.4rem;
+    font-size:3rem;
   }
 
   .card-content{
-    padding:1.5rem 1.6rem 1.8rem;
+    padding:1.5rem 1.6rem 1.5rem 0;
+    flex:1;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:1rem;
+  }
+
+  .card-content-text{
+    flex:1;
   }
 
   .card-number{
@@ -235,17 +259,50 @@
     color:var(--ink-dim);
   }
 
-  /* Card única "Conceptos clave" con subtemas dentro */
-  .card.primary{
-    grid-column: 1 / -1;
+  .chevron{
+    flex-shrink:0;
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    border:1px solid var(--line);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition: transform 0.3s ease, background 0.25s ease, border-color 0.25s ease;
+  }
+
+  .chevron svg{
+    width:16px;
+    height:16px;
+    stroke:var(--teal);
+    transition:stroke 0.25s ease;
+  }
+
+  .card.primary.open .chevron{
+    transform: rotate(180deg);
+    background: rgba(16,166,166,0.14);
+    border-color: var(--teal);
+  }
+
+  .subtopics-wrap{
+    display:grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.4s ease;
+  }
+
+  .card.primary.open .subtopics-wrap{
+    grid-template-rows: 1fr;
+  }
+
+  .subtopics-inner{
+    overflow:hidden;
   }
 
   .subtopics{
     display:grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap:1.2rem;
-    margin-top:1.6rem;
-    padding-top:1.6rem;
+    padding:1.6rem 1.6rem 1.8rem;
     border-top:1px solid var(--line);
   }
 
@@ -264,12 +321,12 @@
 
   .subtopic-image{
     width:100%;
-    height:110px;
+    height:100px;
     background:linear-gradient(135deg, #0F5C5C 0%, #10A6A6 100%);
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:2.2rem;
+    font-size:2.1rem;
   }
 
   .subtopic-content{
@@ -316,11 +373,20 @@
     .catalog{ padding: 6vh 6vw 7vh; }
     .cards-container{ gap:1.4rem; }
     .scroll-hint{ left:6vw; }
+    .card-toggle{ flex-wrap:wrap; }
+    .card-image{ width:90px; min-width:90px; height:90px; font-size:2rem; }
+    .card-content{ padding:1.2rem 1.2rem 1.2rem 0; flex-wrap:wrap; }
+    .subtopics{ padding:1.4rem 1.2rem 1.5rem; }
   }
 
   @media (prefers-reduced-motion: reduce){
     .cover-inner{ animation:none; opacity:1; }
     html{ scroll-behavior:auto; }
+  }
+
+  button:focus-visible{
+    outline:2px solid var(--teal);
+    outline-offset:3px;
   }
 </style>
 </head>
@@ -370,45 +436,112 @@
 
   <div class="cards-container">
 
-    <div class="card primary">
-      <div class="card-image">🧠</div>
-      <div class="card-content">
-        <span class="card-number">Tema 1</span>
-        <h3 class="card-title">Conceptos clave</h3>
-        <p class="card-desc">Sistema embebido, microcontrolador, sensor, actuador, retroalimentación e IoT: el vocabulario base de la automatización con Arduino.</p>
-
-        <div class="subtopics">
-
-          <div class="subtopic">
-            <div class="subtopic-image">🔧</div>
-            <div class="subtopic-content">
-              <span class="subtopic-number">Tema 2</span>
-              <h4 class="subtopic-title">Componentes y sensores</h4>
-              <p class="subtopic-desc">Placas, sensores de temperatura, distancia, humedad y movimiento, junto con actuadores como motores y relevadores.</p>
-            </div>
+    <article class="card primary" id="mainCard">
+      <button class="card-toggle" id="mainCardToggle" aria-expanded="false" aria-controls="subtopicsPanel">
+        <div class="card-image">🧠</div>
+        <div class="card-content">
+          <div class="card-content-text">
+            <span class="card-number">Tema 1</span>
+            <h3 class="card-title">Conceptos clave</h3>
+            <p class="card-desc">Sistema embebido, microcontrolador, sensor, actuador, retroalimentación e IoT: el vocabulario base de la automatización con Arduino. Toca para ver todos los subtemas.</p>
           </div>
+          <span class="chevron">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </span>
+        </div>
+      </button>
 
-          <div class="subtopic">
-            <div class="subtopic-image">🔄</div>
-            <div class="subtopic-content">
-              <span class="subtopic-number">Tema 3</span>
-              <h4 class="subtopic-title">Control y lazo cerrado</h4>
-              <p class="subtopic-desc">Cómo la retroalimentación de los sensores permite corregir el comportamiento del sistema en tiempo real.</p>
+      <div class="subtopics-wrap" id="subtopicsPanel">
+        <div class="subtopics-inner">
+          <div class="subtopics">
+
+            <div class="subtopic">
+              <div class="subtopic-image">🔩</div>
+              <div class="subtopic-content">
+                <span class="subtopic-number">01</span>
+                <h4 class="subtopic-title">¿Qué es la automatización?</h4>
+                <p class="subtopic-desc">Uso de sistemas de control para ejecutar procesos con mínima intervención humana, mejorando precisión y seguridad.</p>
+              </div>
             </div>
-          </div>
 
-          <div class="subtopic">
-            <div class="subtopic-image">🏭</div>
-            <div class="subtopic-content">
-              <span class="subtopic-number">Tema 4</span>
-              <h4 class="subtopic-title">Aplicaciones prácticas</h4>
-              <p class="subtopic-desc">Bandas transportadoras, control de acceso, iluminación inteligente y monitoreo remoto con Arduino.</p>
+            <div class="subtopic">
+              <div class="subtopic-image">💻</div>
+              <div class="subtopic-content">
+                <span class="subtopic-number">02</span>
+                <h4 class="subtopic-title">Arduino como plataforma</h4>
+                <p class="subtopic-desc">Placa de hardware libre basada en un microcontrolador, programable en C/C++, ideal para prototipar soluciones de control.</p>
+              </div>
             </div>
-          </div>
 
+            <div class="subtopic">
+              <div class="subtopic-image">🔧</div>
+              <div class="subtopic-content">
+                <span class="subtopic-number">03</span>
+                <h4 class="subtopic-title">Componentes y sensores</h4>
+                <p class="subtopic-desc">Sensores de temperatura, distancia, humedad y movimiento que capturan información del entorno físico.</p>
+              </div>
+            </div>
+
+            <div class="subtopic">
+              <div class="subtopic-image">⚙️</div>
+              <div class="subtopic-content">
+                <span class="subtopic-number">04</span>
+                <h4 class="subtopic-title">Actuadores</h4>
+                <p class="subtopic-desc">Motores, relevadores, servomotores y electroválvulas que transforman una señal de control en acción física.</p>
+              </div>
+            </div>
+
+            <div class="subtopic">
+              <div class="subtopic-image">📶</div>
+              <div class="subtopic-content">
+                <span class="subtopic-number">05</span>
+                <h4 class="subtopic-title">Entradas y salidas</h4>
+                <p class="subtopic-desc">Pines digitales (0/1) y analógicos (valores intermedios) que permiten a Arduino leer y generar señales.</p>
+              </div>
+            </div>
+
+            <div class="subtopic">
+              <div class="subtopic-image">🔄</div>
+              <div class="subtopic-content">
+                <span class="subtopic-number">06</span>
+                <h4 class="subtopic-title">Control y lazo cerrado</h4>
+                <p class="subtopic-desc">Cómo la retroalimentación de los sensores permite corregir el comportamiento del sistema en tiempo real.</p>
+              </div>
+            </div>
+
+            <div class="subtopic">
+              <div class="subtopic-image">🏗️</div>
+              <div class="subtopic-content">
+                <span class="subtopic-number">07</span>
+                <h4 class="subtopic-title">Microcontrolador vs. PLC</h4>
+                <p class="subtopic-desc">El microcontrolador es ideal para prototipos educativos; el PLC está diseñado para entornos industriales robustos.</p>
+              </div>
+            </div>
+
+            <div class="subtopic">
+              <div class="subtopic-image">🌐</div>
+              <div class="subtopic-content">
+                <span class="subtopic-number">08</span>
+                <h4 class="subtopic-title">Comunicación e IoT</h4>
+                <p class="subtopic-desc">Protocolos I2C, SPI, UART y módulos Wi-Fi/Bluetooth que conectan el proceso al Internet de las Cosas.</p>
+              </div>
+            </div>
+
+            <div class="subtopic">
+              <div class="subtopic-image">🏭</div>
+              <div class="subtopic-content">
+                <span class="subtopic-number">09</span>
+                <h4 class="subtopic-title">Aplicaciones prácticas</h4>
+                <p class="subtopic-desc">Bandas transportadoras, control de acceso, iluminación inteligente y monitoreo remoto con Arduino.</p>
+              </div>
+            </div>
+
+          </div>
         </div>
       </div>
-    </div>
+    </article>
 
   </div>
 </section>
@@ -416,6 +549,16 @@
 <footer>
   Automatización de procesos industriales y de servicio — 5° "A", Inteligencia Artificial
 </footer>
+
+<script>
+  const mainCard = document.getElementById('mainCard');
+  const toggleBtn = document.getElementById('mainCardToggle');
+
+  toggleBtn.addEventListener('click', () => {
+    const isOpen = mainCard.classList.toggle('open');
+    toggleBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+</script>
 
 </body>
 </html>
