@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Expediente de proyecto — Automatización de procesos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* Mismos tokens de color y tipografía que index.html, para que ambas páginas se vean como parte del mismo sitio */
+  :root{
+    --bg: #12181A;
+    --bg-soft: #182023;
+    --card-bg: #1B2427;
+    --ink: #EFEEE7;
+    --ink-dim: #9CA8AC;
+    --teal: #10A6A6;
+    --copper: #D2953E;
+    --line: rgba(239,238,231,0.10);
+    --radius: 4px;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter', -apple-system, sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1, h2, h3, .display{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    letter-spacing:-0.01em;
+  }
+
+  /* ---------- ENCABEZADO DE LA PÁGINA ---------- */
+
+  .page-header{
+    position:relative;
+    padding: 7vh 8vw 6vh;
+    border-bottom:1px solid var(--line);
+    overflow:hidden;
+  }
+
+  .circuit{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    opacity:0.5;
+    pointer-events:none;
+  }
+
+  .circuit path{ fill:none; stroke:var(--teal); stroke-width:1; opacity:0.35; }
+  .circuit circle{ fill:var(--copper); opacity:0.55; }
+
+  .header-inner{ position:relative; z-index:2; max-width:820px; }
+
+  /* ⬇️ ENLACE "VOLVER" — cambia el texto o el href aquí ⬇️ */
+  .back-link{
+    display:inline-flex;
+    align-items:center;
+    gap:0.5rem;
+    font-size:0.85rem;
+    color:var(--teal);
+    text-decoration:none;
+    margin-bottom:2rem;
+    transition: gap 0.2s ease;
+  }
+
+  .back-link:hover{ gap:0.8rem; }
+
+  /* ⬇️ ETIQUETA PEQUEÑA SOBRE EL TÍTULO — cambia "Tema 2" aquí ⬇️ */
+  .kicker{
+    font-family:'Space Grotesk', sans-serif;
+    font-size:0.85rem;
+    color:var(--copper);
+    letter-spacing:0.02em;
+    margin-bottom:1.4rem;
+  }
+
+  /* ⬇️ TÍTULO PRINCIPAL DE LA PÁGINA — cambia aquí ⬇️ */
+  .page-header h1{
+    font-size:clamp(2rem, 5vw, 3.4rem);
+    line-height:1.1;
+    color:var(--ink);
+    max-width:16ch;
+  }
+
+  /* ⬇️ DESCRIPCIÓN BAJO EL TÍTULO — cambia aquí ⬇️ */
+  .page-header .lead{
+    margin-top:1.4rem;
+    max-width:60ch;
+    font-size:1.02rem;
+    color:var(--ink-dim);
+  }
+
+  /* ---------- CONTENIDO ---------- */
+
+  .contenido{
+    max-width:980px;
+    margin:0 auto;
+    padding: 6vh 8vw 10vh;
+  }
+
+  .seccion{
+    margin-bottom: 3.6rem;
+  }
+
+  .seccion-numero{
+    display:inline-block;
+    background:var(--copper);
+    color:#1B1400;
+    padding:0.25rem 0.75rem;
+    border-radius:20px;
+    font-size:0.78rem;
+    font-weight:600;
+    font-family:'Space Grotesk', sans-serif;
+    margin-bottom:1.1rem;
+  }
+
+  .seccion-titulo{
+    font-size:clamp(1.3rem, 2.6vw, 1.7rem);
+    color:var(--ink);
+    margin-bottom:1.1rem;
+  }
+
+  .seccion-texto{
+    font-size:0.98rem;
+    color:var(--ink-dim);
+    max-width:70ch;
+    margin-bottom:1rem;
+  }
+
+  .seccion-texto:last-child{ margin-bottom:0; }
+
+  /* ---------- PASOS (planeación) ---------- */
+
+  .pasos{
+    display:grid;
+    gap:1.2rem;
+    margin-top:1.6rem;
+  }
+
+  .paso{
+    display:grid;
+    grid-template-columns: 44px 1fr;
+    gap:1.1rem;
+    align-items:start;
+    padding:1.2rem 1.4rem;
+    background:var(--card-bg);
+    border:1px solid var(--line);
+    border-radius:10px;
+    transition: border-color 0.25s ease;
+  }
+
+  .paso:hover{ border-color:var(--teal); }
+
+  .paso-num{
+    width:44px;
+    height:44px;
+    border-radius:50%;
+    background:var(--bg-soft);
+    border:1px solid var(--line);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    color:var(--teal);
+  }
+
+  .paso-titulo{
+    font-size:1.02rem;
+    font-weight:600;
+    color:var(--ink);
+    margin-bottom:0.35rem;
+  }
+
+  .paso-desc{
+    font-size:0.9rem;
+    color:var(--ink-dim);
+  }
+
+  /* ---------- CAJA DE DETALLE (diagrama / resultados) ---------- */
+
+  .detalle-box{
+    background:var(--card-bg);
+    border:1px solid var(--line);
+    border-left:3px solid var(--teal);
+    border-radius:8px;
+    padding:1.6rem 1.8rem;
+    margin-top:1.6rem;
+  }
+
+  .detalle-titulo{
+    font-size:0.95rem;
+    font-weight:600;
+    color:var(--ink);
+    margin-bottom:1rem;
+    display:flex;
+    align-items:center;
+    gap:0.5rem;
+  }
+
+  .detalle-lista{ list-style:none; }
+
+  .detalle-lista li{
+    padding:0.7rem 0 0.7rem 1.3rem;
+    border-bottom:1px solid var(--line);
+    color:var(--ink-dim);
+    font-size:0.9rem;
+    line-height:1.6;
+    position:relative;
+  }
+
+  .detalle-lista li::before{
+    content:'▸';
+    position:absolute;
+    left:0;
+    color:var(--copper);
+  }
+
+  .detalle-lista li:last-child{ border-bottom:none; }
+  .detalle-lista strong{ color:var(--ink); }
+
+  /* ---------- GRID DE MATERIALES ---------- */
+
+  .materiales{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap:1.1rem;
+    margin-top:1.6rem;
+  }
+
+  .material{
+    background:var(--card-bg);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.2rem 1.3rem;
+    transition: transform 0.25s ease, border-color 0.25s ease;
+  }
+
+  .material:hover{ transform:translateY(-3px); border-color:var(--teal); }
+
+  .material-icono{ font-size:1.6rem; margin-bottom:0.7rem; }
+
+  .material-nombre{
+    font-size:0.96rem;
+    font-weight:600;
+    color:var(--ink);
+    margin-bottom:0.35rem;
+  }
+
+  .material-desc{
+    font-size:0.85rem;
+    color:var(--ink-dim);
+  }
+
+  /* ---------- FOOTER ---------- */
+
+  footer{
+    text-align:center;
+    padding:2.2rem 8vw 3rem;
+    color:var(--ink-dim);
+    font-size:0.82rem;
+    border-top:1px solid var(--line);
+  }
+
+  @media (max-width: 640px){
+    .page-header{ padding: 6vh 6vw 5vh; }
+    .contenido{ padding: 5vh 6vw 7vh; }
+  }
+
+  a:focus-visible{
+    outline:2px solid var(--teal);
+    outline-offset:3px;
+  }
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <svg class="circuit" viewBox="0 0 1200 500" preserveAspectRatio="xMidYMid slice">
+    <path d="M0 80 H260 V180 H520 V60 H900 V220 H1200"></path>
+    <path d="M0 380 H180 V440 H460 V340 H760 V460 H1050 V400 H1200"></path>
+    <circle cx="260" cy="80" r="4"></circle>
+    <circle cx="520" cy="180" r="4"></circle>
+    <circle cx="900" cy="60" r="4"></circle>
+    <circle cx="180" cy="380" r="4"></circle>
+    <circle cx="460" cy="440" r="4"></circle>
+    <circle cx="760" cy="340" r="4"></circle>
+  </svg>
+
+  <div class="header-inner">
+    <!-- ⬇️ AQUÍ CAMBIAS EL ENLACE DE REGRESO ⬇️ -->
+    <a href="index.html" class="back-link">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+      Volver al catálogo
+    </a>
+
+    <!-- ⬇️ AQUÍ CAMBIAS LA ETIQUETA DE TEMA ⬇️ -->
+    <p class="kicker">Tema 2</p>
+    <!-- ⬇️ AQUÍ CAMBIAS EL TÍTULO DE LA PÁGINA ⬇️ -->
+    <h1>Expediente de proyecto</h1>
+    <!-- ⬇️ AQUÍ CAMBIAS LA DESCRIPCIÓN INTRODUCTORIA ⬇️ -->
+    <p class="lead">Documentación y registro del proceso de desarrollo: objetivos, planeación, evidencia y resultados del sistema automatizado.</p>
+  </div>
+</header>
+
+<main class="contenido">
+
+  <!-- ============================================================= -->
+  <!-- SUBTEMA 01: OBJETIVO DEL PROYECTO -->
+  <!-- ============================================================= -->
+  <section class="seccion">
+    <!-- ⬇️ NÚMERO DE SUBTEMA ⬇️ -->
+    <span class="seccion-numero">01</span>
+    <!-- ⬇️ TÍTULO DEL SUBTEMA ⬇️ -->
+    <h2 class="seccion-titulo">Objetivo del proyecto</h2>
+    <!-- ⬇️⬇️ TEXTO DEL SUBTEMA — edita los párrafos aquí ⬇️⬇️ -->
+    <p class="seccion-texto">
+      El proyecto busca resolver un problema concreto del entorno cotidiano mediante un sistema
+      automatizado construido con Arduino: un conjunto de sensores y actuadores que detecta una
+      condición física y responde a ella sin intervención humana directa.
+    </p>
+    <p class="seccion-texto">
+      La meta no es solo que el circuito encienda o apague algo, sino demostrar el ciclo completo
+      de automatización: identificar la necesidad, diseñar la solución, programarla, probarla
+      y documentar los resultados obtenidos.
+    </p>
+    <!-- ⬆️⬆️ FIN TEXTO DEL SUBTEMA ⬆️⬆️ -->
+  </section>
+
+  <!-- ============================================================= -->
+  <!-- SUBTEMA 02: PLANEACIÓN Y CRONOGRAMA -->
+  <!-- ============================================================= -->
+  <section class="seccion">
+    <span class="seccion-numero">02</span>
+    <h2 class="seccion-titulo">Planeación y cronograma</h2>
+    <p class="seccion-texto">Etapas del proyecto ordenadas en el tiempo, de la idea a la entrega final.</p>
+
+    <!-- ⬇️⬇️ PASOS DEL CRONOGRAMA — agrega, quita o edita bloques ".paso" aquí ⬇️⬇️ -->
+    <div class="pasos">
+
+      <div class="paso">
+        <div class="paso-num">1</div>
+        <div>
+          <!-- ⬇️ TÍTULO DEL PASO ⬇️ -->
+          <div class="paso-titulo">Diseño</div>
+          <!-- ⬇️ DESCRIPCIÓN DEL PASO ⬇️ -->
+          <div class="paso-desc">Definición del problema, selección de sensores y actuadores, y bosquejo del diagrama de conexiones antes de tocar el hardware.</div>
+        </div>
+      </div>
+
+      <div class="paso">
+        <div class="paso-num">2</div>
+        <div>
+          <div class="paso-titulo">Construcción</div>
+          <div class="paso-desc">Armado físico del circuito en protoboard, conexión de componentes y primera carga de código a la placa Arduino.</div>
+        </div>
+      </div>
+
+      <div class="paso">
+        <div class="paso-num">3</div>
+        <div>
+          <div class="paso-titulo">Pruebas</div>
+          <div class="paso-desc">Verificación individual de cada componente y ajuste del código hasta lograr el comportamiento esperado del sistema.</div>
+        </div>
+      </div>
+
+      <div class="paso">
+        <div class="paso-num">4</div>
+        <div>
+          <div class="paso-titulo">Entrega final</div>
+          <div class="paso-desc">Integración de todos los módulos, documentación del expediente y presentación del prototipo funcionando.</div>
+        </div>
+      </div>
+
+    </div>
+    <!-- ⬆️⬆️ FIN PASOS DEL CRONOGRAMA ⬆️⬆️ -->
+  </section>
+
+  <!-- ============================================================= -->
+  <!-- SUBTEMA 03: DIAGRAMA DE CONEXIONES -->
+  <!-- ============================================================= -->
+  <section class="seccion">
+    <span class="seccion-numero">03</span>
+    <h2 class="seccion-titulo">Diagrama de conexiones</h2>
+    <p class="seccion-texto">
+      El esquema de conexiones muestra cómo se enlazan la placa Arduino, los sensores y los
+      actuadores dentro del circuito. Cada sensor entrega su lectura a un pin de entrada, la
+      placa procesa esa información con el código cargado y envía la orden correspondiente a
+      un pin de salida conectado al actuador.
+    </p>
+
+    <!-- ⬇️⬇️ LISTA DE ELEMENTOS DEL DIAGRAMA — edita o agrega <li> aquí ⬇️⬇️ -->
+    <div class="detalle-box">
+      <div class="detalle-titulo">⚡ Elementos del diagrama</div>
+      <ul class="detalle-lista">
+        <li><strong>Arduino:</strong> centro de control que recibe, procesa y envía las señales.</li>
+        <li><strong>Sensores:</strong> conectados a pines de entrada, digitales o analógicos según el tipo.</li>
+        <li><strong>Actuadores:</strong> conectados a pines de salida, muchas veces a través de un relevador o transistor.</li>
+        <li><strong>Alimentación:</strong> fuente de 5V/3.3V o externa, según el consumo de los componentes.</li>
+      </ul>
+    </div>
+    <!-- ⬆️⬆️ FIN LISTA DEL DIAGRAMA ⬆️⬆️ -->
+
+    <!-- ⬇️ Si tienes una imagen del diagrama real, puedes agregarla así (descomenta y pon tu ruta) ⬇️ -->
+    <!-- <img src="diagrama-conexiones.png" alt="Diagrama de conexiones del circuito" style="width:100%; border-radius:8px; margin-top:1.6rem; border:1px solid var(--line);"> -->
+  </section>
+
+  <!-- ============================================================= -->
+  <!-- SUBTEMA 04: LISTA DE MATERIALES -->
+  <!-- ============================================================= -->
+  <section class="seccion">
+    <span class="seccion-numero">04</span>
+    <h2 class="seccion-titulo">Lista de materiales</h2>
+    <p class="seccion-texto">Componentes básicos necesarios para construir el prototipo, junto con su función dentro del circuito.</p>
+
+    <!-- ⬇️⬇️ TARJETAS DE MATERIALES — agrega, quita o edita bloques ".material" aquí ⬇️⬇️ -->
+    <div class="materiales">
+
+      <div class="material">
+        <div class="material-icono">🔲</div>
+        <!-- ⬇️ NOMBRE DEL MATERIAL ⬇️ -->
+        <div class="material-nombre">Placa Arduino</div>
+        <!-- ⬇️ DESCRIPCIÓN DEL MATERIAL ⬇️ -->
+        <div class="material-desc">Microcontrolador principal que ejecuta el programa y coordina el circuito.</div>
+      </div>
+
+      <div class="material">
+        <div class="material-icono">🌡️</div>
+        <div class="material-nombre">Sensores</div>
+        <div class="material-desc">Módulos de temperatura, distancia o movimiento, según lo que el proyecto necesite detectar.</div>
+      </div>
+
+      <div class="material">
+        <div class="material-icono">⚙️</div>
+        <div class="material-nombre">Actuadores</div>
+        <div class="material-desc">Motores, servos o relevadores que ejecutan la acción física final.</div>
+      </div>
+
+      <div class="material">
+        <div class="material-icono">🔗</div>
+        <div class="material-nombre">Protoboard y cables</div>
+        <div class="material-desc">Permiten armar y modificar el circuito sin soldadura durante las pruebas.</div>
+      </div>
+
+      <div class="material">
+        <div class="material-icono">🔋</div>
+        <div class="material-nombre">Fuente de alimentación</div>
+        <div class="material-desc">Batería o adaptador que suministra energía estable al circuito completo.</div>
+      </div>
+
+    </div>
+    <!-- ⬆️⬆️ FIN TARJETAS DE MATERIALES ⬆️⬆️ -->
+  </section>
+
+  <!-- ============================================================= -->
+  <!-- SUBTEMA 05: RESULTADOS Y CONCLUSIONES -->
+  <!-- ============================================================= -->
+  <section class="seccion">
+    <span class="seccion-numero">05</span>
+    <h2 class="seccion-titulo">Resultados y conclusiones</h2>
+    <p class="seccion-texto">
+      El prototipo respondió como se planeó: los sensores capturaron la variable física de
+      interés y los actuadores reaccionaron en consecuencia, cerrando el lazo de control descrito
+      en el marco teórico del proyecto.
+    </p>
+
+    <!-- ⬇️⬇️ LISTA DE APRENDIZAJES — edita o agrega <li> aquí ⬇️⬇️ -->
+    <div class="detalle-box">
+      <div class="detalle-titulo">⚡ Aprendizajes obtenidos</div>
+      <ul class="detalle-lista">
+        <li><strong>Validación por partes:</strong> probar cada componente por separado ahorra tiempo al depurar errores.</li>
+        <li><strong>Documentación continua:</strong> registrar cada etapa facilita explicar y defender el proyecto.</li>
+        <li><strong>Trabajo iterativo:</strong> los ajustes de código y cableado fueron parte natural del proceso, no un fracaso.</li>
+      </ul>
+    </div>
+    <!-- ⬆️⬆️ FIN LISTA DE APRENDIZAJES ⬆️⬆️ -->
+  </section>
+
+</main>
+
+<!-- ⬇️ AQUÍ CAMBIAS EL TEXTO DEL PIE DE PÁGINA ⬇️ -->
+<footer>
+  Expediente de proyecto — Automatización de procesos industriales y de servicio · 5° "A", Inteligencia Artificial
+</footer>
+
+</body>
+</html>
