@@ -38,8 +38,6 @@
     letter-spacing:-0.01em;
   }
 
-  /* ---------- PORTADA ---------- */
-
   .cover{
     position:relative;
     min-height:100svh;
@@ -116,21 +114,9 @@
     padding-left:1.4rem;
   }
 
-  .authorship .label{
-    font-size:0.78rem;
-    color:var(--ink-dim);
-  }
-
-  .authorship .name{
-    font-size:1.05rem;
-    font-weight:500;
-    color:var(--ink);
-  }
-
-  .authorship .group{
-    font-size:0.92rem;
-    color:var(--ink-dim);
-  }
+  .authorship .label{ font-size:0.78rem; color:var(--ink-dim); }
+  .authorship .name{ font-size:1.05rem; font-weight:500; color:var(--ink); }
+  .authorship .group{ font-size:0.92rem; color:var(--ink-dim); }
 
   .scroll-hint{
     position:absolute;
@@ -144,13 +130,7 @@
     gap:0.5rem;
   }
 
-  .scroll-hint .stem{
-    width:1px;
-    height:26px;
-    background:var(--line);
-  }
-
-  /* ---------- CATÁLOGO ---------- */
+  .scroll-hint .stem{ width:1px; height:26px; background:var(--line); }
 
   .catalog{
     padding: 7vh 8vw 10vh;
@@ -158,20 +138,9 @@
     margin:0 auto;
   }
 
-  .catalog-head{
-    max-width:56ch;
-    margin-bottom: 3.4rem;
-  }
-
-  .catalog-head h2{
-    font-size:clamp(1.5rem, 3vw, 1.9rem);
-    margin-bottom:0.9rem;
-  }
-
-  .catalog-head p{
-    color:var(--ink-dim);
-    font-size:0.98rem;
-  }
+  .catalog-head{ max-width:56ch; margin-bottom: 3.4rem; }
+  .catalog-head h2{ font-size:clamp(1.5rem, 3vw, 1.9rem); margin-bottom:0.9rem; }
+  .catalog-head p{ color:var(--ink-dim); font-size:0.98rem; }
 
   .cards-container{
     display:grid;
@@ -179,8 +148,6 @@
     gap:1.8rem;
     margin-top:2rem;
   }
-
-  /* ---------- CARD ÚNICA EXPANDIBLE ---------- */
 
   .card.primary{
     grid-column: 1 / -1;
@@ -192,10 +159,7 @@
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
   }
 
-  .card.primary:hover{
-    border-color:var(--teal);
-    box-shadow:0 12px 24px rgba(0,0,0,0.35);
-  }
+  .card.primary:hover{ border-color:var(--teal); box-shadow:0 12px 24px rgba(0,0,0,0.35); }
 
   .card-toggle{
     display:flex;
@@ -210,6 +174,8 @@
     color:inherit;
     padding:0;
   }
+
+  a.card-toggle{ text-decoration:none; }
 
   .card-image{
     width:130px;
@@ -231,9 +197,7 @@
     gap:1rem;
   }
 
-  .card-content-text{
-    flex:1;
-  }
+  .card-content-text{ flex:1; }
 
   .card-number{
     display:inline-block;
@@ -247,17 +211,8 @@
     margin-bottom:1rem;
   }
 
-  .card-title{
-    font-size:1.25rem;
-    font-weight:600;
-    color:var(--ink);
-    margin-bottom:0.6rem;
-  }
-
-  .card-desc{
-    font-size:0.92rem;
-    color:var(--ink-dim);
-  }
+  .card-title{ font-size:1.25rem; font-weight:600; color:var(--ink); margin-bottom:0.6rem; }
+  .card-desc{ font-size:0.92rem; color:var(--ink-dim); }
 
   .chevron{
     flex-shrink:0;
@@ -271,15 +226,16 @@
     transition: transform 0.3s ease, background 0.25s ease, border-color 0.25s ease;
   }
 
-  .chevron svg{
-    width:16px;
-    height:16px;
-    stroke:var(--teal);
-    transition:stroke 0.25s ease;
-  }
+  .chevron svg{ width:16px; height:16px; stroke:var(--teal); transition:stroke 0.25s ease; }
 
   .card.primary.open .chevron{
     transform: rotate(180deg);
+    background: rgba(16,166,166,0.14);
+    border-color: var(--teal);
+  }
+
+  .card.link-card:hover .chevron{
+    transform: translateX(4px);
     background: rgba(16,166,166,0.14);
     border-color: var(--teal);
   }
@@ -290,13 +246,9 @@
     transition: grid-template-rows 0.4s ease;
   }
 
-  .card.primary.open .subtopics-wrap{
-    grid-template-rows: 1fr;
-  }
+  .card.primary.open .subtopics-wrap{ grid-template-rows: 1fr; }
 
-  .subtopics-inner{
-    overflow:hidden;
-  }
+  .subtopics-inner{ overflow:hidden; }
 
   .subtopics{
     display:grid;
@@ -314,10 +266,7 @@
     transition: transform 0.25s ease, border-color 0.25s ease;
   }
 
-  .subtopic:hover{
-    transform:translateY(-4px);
-    border-color:var(--teal);
-  }
+  .subtopic:hover{ transform:translateY(-4px); border-color:var(--teal); }
 
   .subtopic-image{
     width:100%;
@@ -329,9 +278,7 @@
     font-size:2.1rem;
   }
 
-  .subtopic-content{
-    padding:1.1rem 1.2rem 1.3rem;
-  }
+  .subtopic-content{ padding:1.1rem 1.2rem 1.3rem; }
 
   .subtopic-number{
     display:inline-block;
@@ -345,17 +292,8 @@
     margin-bottom:0.7rem;
   }
 
-  .subtopic-title{
-    font-size:1.02rem;
-    font-weight:600;
-    color:var(--ink);
-    margin-bottom:0.4rem;
-  }
-
-  .subtopic-desc{
-    font-size:0.86rem;
-    color:var(--ink-dim);
-  }
+  .subtopic-title{ font-size:1.02rem; font-weight:600; color:var(--ink); margin-bottom:0.4rem; }
+  .subtopic-desc{ font-size:0.86rem; color:var(--ink-dim); }
 
   footer{
     text-align:center;
@@ -364,8 +302,6 @@
     font-size:0.82rem;
     border-top:1px solid var(--line);
   }
-
-  /* ---------- RESPONSIVE ---------- */
 
   @media (max-width: 640px){
     .cover{ padding: 7vh 6vw; }
@@ -384,7 +320,7 @@
     html{ scroll-behavior:auto; }
   }
 
-  button:focus-visible{
+  button:focus-visible, a:focus-visible{
     outline:2px solid var(--teal);
     outline-offset:3px;
   }
@@ -544,82 +480,24 @@
     </article>
 
     <!-- ============================================================= -->
-    <!-- TEMA 2: EXPEDIENTE DE PROYECTO -->
+    <!-- TEMA 2: EXPEDIENTE DE PROYECTO — ahora enlaza a una página especial -->
     <!-- ============================================================= -->
-    <article class="card primary" id="cardExpediente">
-      <button class="card-toggle" id="cardExpedienteToggle" aria-expanded="false" aria-controls="panelExpediente">
+    <article class="card primary link-card" id="cardExpediente">
+      <a class="card-toggle" href="expediente-proyecto.html">
         <div class="card-image">📋</div>
         <div class="card-content">
           <div class="card-content-text">
-            <!-- ⬇️ AQUÍ CAMBIAS EL NÚMERO DE TEMA ⬇️ -->
             <span class="card-number">Tema 2</span>
-            <!-- ⬇️ AQUÍ CAMBIAS EL TÍTULO ⬇️ -->
             <h3 class="card-title">Expediente de proyecto</h3>
-            <!-- ⬇️ AQUÍ CAMBIAS LA DESCRIPCIÓN ⬇️ -->
-            <p class="card-desc">Documentación y registro del proceso de desarrollo: objetivos, planeación, evidencia y resultados. Toca para ver todos los subtemas.</p>
+            <p class="card-desc">Documentación y registro del proceso de desarrollo: objetivos, planeación, evidencia y resultados. Toca para abrir el expediente completo.</p>
           </div>
           <span class="chevron">
             <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="6 9 12 15 18 9"></polyline>
+              <polyline points="9 6 15 12 9 18"></polyline>
             </svg>
           </span>
         </div>
-      </button>
-
-      <div class="subtopics-wrap" id="panelExpediente">
-        <div class="subtopics-inner">
-          <div class="subtopics">
-
-            <!-- ⬇️⬇️ SUBTEMAS DE "EXPEDIENTE DE PROYECTO" — EDITA AQUÍ ⬇️⬇️ -->
-            <div class="subtopic">
-              <div class="subtopic-image">🎯</div>
-              <div class="subtopic-content">
-                <span class="subtopic-number">01</span>
-                <h4 class="subtopic-title">Objetivo del proyecto</h4>
-                <p class="subtopic-desc">Definición clara del problema a resolver y la meta que se busca alcanzar con el sistema automatizado.</p>
-              </div>
-            </div>
-
-            <div class="subtopic">
-              <div class="subtopic-image">🗓️</div>
-              <div class="subtopic-content">
-                <span class="subtopic-number">02</span>
-                <h4 class="subtopic-title">Planeación y cronograma</h4>
-                <p class="subtopic-desc">Etapas del proyecto ordenadas en el tiempo: diseño, construcción, pruebas y entrega final.</p>
-              </div>
-            </div>
-
-            <div class="subtopic">
-              <div class="subtopic-image">🖇️</div>
-              <div class="subtopic-content">
-                <span class="subtopic-number">03</span>
-                <h4 class="subtopic-title">Diagrama de conexiones</h4>
-                <p class="subtopic-desc">Esquema que muestra cómo se conectan Arduino, sensores y actuadores dentro del circuito completo.</p>
-              </div>
-            </div>
-
-            <div class="subtopic">
-              <div class="subtopic-image">🧾</div>
-              <div class="subtopic-content">
-                <span class="subtopic-number">04</span>
-                <h4 class="subtopic-title">Lista de materiales</h4>
-                <p class="subtopic-desc">Componentes, costos y proveedores necesarios para construir el prototipo.</p>
-              </div>
-            </div>
-
-            <div class="subtopic">
-              <div class="subtopic-image">✅</div>
-              <div class="subtopic-content">
-                <span class="subtopic-number">05</span>
-                <h4 class="subtopic-title">Resultados y conclusiones</h4>
-                <p class="subtopic-desc">Evidencia de que el sistema funciona según lo planeado y aprendizajes obtenidos durante el proceso.</p>
-              </div>
-            </div>
-            <!-- ⬆️⬆️ FIN SUBTEMAS "EXPEDIENTE DE PROYECTO" ⬆️⬆️ -->
-
-          </div>
-        </div>
-      </div>
+      </a>
     </article>
 
     <!-- ============================================================= -->
@@ -630,11 +508,8 @@
         <div class="card-image">🔌</div>
         <div class="card-content">
           <div class="card-content-text">
-            <!-- ⬇️ AQUÍ CAMBIAS EL NÚMERO DE TEMA ⬇️ -->
             <span class="card-number">Tema 3</span>
-            <!-- ⬇️ AQUÍ CAMBIAS EL TÍTULO ⬇️ -->
             <h3 class="card-title">Circuitos físicos individuales</h3>
-            <!-- ⬇️ AQUÍ CAMBIAS LA DESCRIPCIÓN ⬇️ -->
             <p class="card-desc">Implementación y prueba de circuitos en hardware real, uno por uno, antes de integrarlos al sistema completo. Toca para ver todos los subtemas.</p>
           </div>
           <span class="chevron">
@@ -649,7 +524,6 @@
         <div class="subtopics-inner">
           <div class="subtopics">
 
-            <!-- ⬇️⬇️ SUBTEMAS DE "CIRCUITOS FÍSICOS INDIVIDUALES" — EDITA AQUÍ ⬇️⬇️ -->
             <div class="subtopic">
               <div class="subtopic-image">🌡️</div>
               <div class="subtopic-content">
@@ -694,19 +568,21 @@
                 <p class="subtopic-desc">Una vez validado cada circuito por separado, se combinan todos los módulos en el proyecto completo.</p>
               </div>
             </div>
-            <!-- ⬆️⬆️ FIN SUBTEMAS "CIRCUITOS FÍSICOS INDIVIDUALES" ⬆️⬆️ -->
 
           </div>
         </div>
       </div>
     </article>
 
+  </div>
+</section>
+
 <footer>
   Automatización de procesos industriales y de servicio — 5° "A", Inteligencia Artificial
 </footer>
 
 <script>
-  document.querySelectorAll('.card.primary').forEach((card) => {
+  document.querySelectorAll('.card.primary:not(.link-card)').forEach((card) => {
     const btn = card.querySelector('.card-toggle');
     btn.addEventListener('click', () => {
       const isOpen = card.classList.toggle('open');
