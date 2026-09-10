@@ -503,93 +503,20 @@
     <!-- ============================================================= -->
     <!-- TEMA 3: CIRCUITOS FÍSICOS INDIVIDUALES -->
     <!-- ============================================================= -->
-    <article class="card primary" id="cardCircuitos">
-      <button class="card-toggle" id="cardCircuitosToggle" aria-expanded="false" aria-controls="panelCircuitos">
-        <div class="card-image">🔌</div>
+    <article class="card primary link-card" id="cardExpediente">
+      <a class="card-toggle" href="tercer_card.html">
+        <div class="card-image">🤖</div>
         <div class="card-content">
           <div class="card-content-text">
             <span class="card-number">Tema 3</span>
-            <h3 class="card-title">Circuitos físicos individuales</h3>
-            <p class="card-desc">Implementación y prueba de circuitos en hardware real, uno por uno, antes de integrarlos al sistema completo. Toca para ver todos los subtemas.</p>
+            <h3 class="card-title">Circuito individual físico</h3>
+            <p class="card-desc">Documentación y registro del proceso de desarrollo: objetivos, planeación, evidencia y resultados. Toca para abrir el expediente completo.</p>
           </div>
           <span class="chevron">
             <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="6 9 12 15 18 9"></polyline>
+              <polyline points="9 6 15 12 9 18"></polyline>
             </svg>
           </span>
         </div>
-      </button>
-
-      <div class="subtopics-wrap" id="panelCircuitos">
-        <div class="subtopics-inner">
-          <div class="subtopics">
-
-            <div class="subtopic">
-              <div class="subtopic-image">🌡️</div>
-              <div class="subtopic-content">
-                <span class="subtopic-number">01</span>
-                <h4 class="subtopic-title">Prueba de sensores</h4>
-                <p class="subtopic-desc">Verificar por separado que cada sensor lea correctamente la magnitud física que le corresponde.</p>
-              </div>
-            </div>
-
-            <div class="subtopic">
-              <div class="subtopic-image">⚙️</div>
-              <div class="subtopic-content">
-                <span class="subtopic-number">02</span>
-                <h4 class="subtopic-title">Prueba de actuadores</h4>
-                <p class="subtopic-desc">Comprobar que motores, relevadores o servomotores respondan correctamente a la señal de control.</p>
-              </div>
-            </div>
-
-            <div class="subtopic">
-              <div class="subtopic-image">🔗</div>
-              <div class="subtopic-content">
-                <span class="subtopic-number">03</span>
-                <h4 class="subtopic-title">Verificación de cableado</h4>
-                <p class="subtopic-desc">Revisar conexiones físicas para evitar cortos, falsos contactos o errores de polaridad.</p>
-              </div>
-            </div>
-
-            <div class="subtopic">
-              <div class="subtopic-image">💻</div>
-              <div class="subtopic-content">
-                <span class="subtopic-number">04</span>
-                <h4 class="subtopic-title">Pruebas de código individual</h4>
-                <p class="subtopic-desc">Ejecutar pequeños programas de prueba para validar la lógica de cada componente por separado.</p>
-              </div>
-            </div>
-
-            <div class="subtopic">
-              <div class="subtopic-image">🧩</div>
-              <div class="subtopic-content">
-                <span class="subtopic-number">05</span>
-                <h4 class="subtopic-title">Integración al sistema final</h4>
-                <p class="subtopic-desc">Una vez validado cada circuito por separado, se combinan todos los módulos en el proyecto completo.</p>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </div>
+      </a>
     </article>
-
-  </div>
-</section>
-
-<footer>
-  Automatización de procesos industriales y de servicio — 5° "A", Inteligencia Artificial
-</footer>
-
-<script>
-  document.querySelectorAll('.card.primary:not(.link-card)').forEach((card) => {
-    const btn = card.querySelector('.card-toggle');
-    btn.addEventListener('click', () => {
-      const isOpen = card.classList.toggle('open');
-      btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-    });
-  });
-</script>
-
-</body>
-</html>
